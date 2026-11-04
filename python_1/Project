@@ -1,72 +1,89 @@
+
+# Starting bank balance
 balance = 0
-while True:         
- print("Welcome to bank account")
- print("1. Check Balance")
- print("2. Withdraw Money")
- print("3. Exit")
- print("4. Task")
+account_active = True
 
- 
+# List of chores and the money earned for completing them
+tasks = [
+    ["Clean up room", 5],
+    ["Fold clothes", 10],
+    ["Wash dishes", 15],
+    ["Take out trash", 10],
+    ["Make bed", 5],
+    ["Sweep floor", 10],
+    ["Vacuum carpets", 15],
+    ["Mow lawn", 20],
+    ["Walk dog", 10],
+    ["Feed pets", 5]
+]
 
- user_choice = input("Please select an option (1-4): ")
- # : this means then
- if user_choice == "1":
-    print("Check Balance selected.")
-    print("Your current balance is:", balance)
- elif user_choice == "2":
-    print("Your current balance is:", balance)
-    withdraw_amount = (input("Enter the amount to withdraw: "))
-    if withdraw_amount > balance:
-        print("Insufficient funds. Your current balance is:", balance)
+# Function to display the current bank balance
+def check_balance():
+    print("Your current balance is: $", balance)
+
+# Function to display all available chores
+def show_tasks():
+    print("\nAvailable Tasks:")
+    for number, task in enumerate(tasks, start=1):
+        print(number, ":", task[0], "- Earn $", task[1])
+
+# Main banking program
+while account_active:
+    print("\nWelcome to bank account")
+    print("1. Check Balance")
+    print("2. Withdraw Money")
+    print("3. Exit")
+    print("4. Tasks")
+
+    user_choice = input("Please select an option (1-4): ")
+
+    # Check account balance
+    if user_choice == "1":
+        check_balance()
+
+    # Withdraw money from the account
+    elif user_choice == "2":
+        check_balance()
+        withdraw_amount = int(input("Enter the amount to withdraw: "))
+
+        if withdraw_amount <= 0:
+            print("Please enter a positive amount.")
+
+        elif withdraw_amount > balance:
+            print("Insufficient funds. Your current balance is:", balance)
+
+        else:
+            balance -= withdraw_amount
+            print("Withdrawal successful!")
+            print("Your new balance is:", balance)
+
+    # Exit the banking program
+    elif user_choice == "3":
+        print("Thank you for using the bank account!")
+        account_active = False
+
+    # Display tasks and earn money
+    elif user_choice == "4":
+        show_tasks()
+
+        task_choice = input("Please select a task (1-10): ")
+
+        if task_choice.isdigit():
+            task_number = int(task_choice)
+
+            if 1 <= task_number <= len(tasks):
+                selected_task = tasks[task_number - 1]
+                balance += selected_task[1]
+
+                print("You completed:", selected_task[0])
+                print("You earned: $", selected_task[1])
+                print("Your new balance is: $", balance)
+
+            else:
+                print("Invalid task selection.")
+
+        else:
+            print("Please enter a number.")
+
     else:
-        balance = balance - withdraw_amount
-        print("Withdrawal successful. Your new balance is:", balance)
-
- elif user_choice == "3":
-    print("Exit selected.")
- elif user_choice == "4":
-    print("Task selected.")
-    task_choice = None
-    print("1 : Clean up room gain 5$")
-    print("2 : Fold clothes gain 10$")
-    print("3 : Wash dishes gain 15$")
-    print("4 : Take out trash gain 10$")
-    print("5 : Make bed gain 5$")
-    print("6 : sweep floor gain 10$")
-    print("7 : vacuum carpets gain 15$")
-    print("8 : mow lawn gain 20$")
-    print("9 : walk dog gain 10$")
-    print("10 : feed pets gain 5$")
-    task_choice = input("Please select a task (1-10): ")
-    if task_choice == "1":
-        balance += 5
-        print("You earned $5 for cleaning up your room. Your new balance is:", balance)
-    elif task_choice == "2":
-        balance += 10
-        print("You earned $10 for folding clothes. Your new balance is:", balance)
-    elif task_choice == "3":
-        balance += 15
-        print("You earned $15 for washing dishes. Your new balance is:", balance)
-    elif task_choice == "4":
-        balance += 10
-        print("You earned $10 for taking out the trash. Your new balance is:", balance)
-    elif task_choice == "5":
-        balance += 5
-        print("You earned $5 for making your bed. Your new balance is:", balance)
-    elif task_choice == "6":
-        balance += 10
-        print("You earned $10 for sweeping the floor. Your new balance is:", balance)
-    elif task_choice == "7":
-        balance += 15
-        print("You earned $15 for vacuuming the carpets. Your new balance is:", balance)
-    elif task_choice == "8":
-        balance += 20
-        print("You earned $20 for mowing the lawn. Your new balance is:", balance)
-    elif task_choice == "9":
-        balance += 10
-        print("You earned $10 for walking the dog. Your new balance is:", balance)
-    elif task_choice == "10":
-        balance += 5
-        print("You earned $5 for feeding the pets. Your new balance is:", balance)
-    else:
-        print("Invalid task selection.")=
+        print("Invalid option. Please select 1-4.")
